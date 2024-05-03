@@ -17,6 +17,7 @@ function App() {
   const [jobList, setJobList] = useState([]);
   const [filteredJobList, setFilteredJobList] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [searchCompanyText, setSearchCompanyText] = useState("");
 
   useEffect(() => {
     const myHeaders = new Headers();
@@ -49,7 +50,14 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <Box sx={{ margin: "20px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            margin: "20px",
+            flexDirection: "row",
+            gap: "20px",
+          }}
+        >
           <TextField
             value={searchText}
             label="Search city"
@@ -58,7 +66,24 @@ function App() {
             onChange={(e) => {
               setSearchText(e.target.value);
               const filteredJobListArray = jobList.filter((job) =>
-                job.location.toLowerCase().includes(searchText.toLowerCase())
+                job.location
+                  .toLowerCase()
+                  .includes(e.target.value.toLowerCase())
+              );
+              setFilteredJobList(filteredJobListArray);
+            }}
+          />
+          <TextField
+            value={searchCompanyText}
+            label="Search company"
+            defaultValue="Search company"
+            size="small"
+            onChange={(e) => {
+              setSearchCompanyText(e.target.value);
+              const filteredJobListArray = jobList.filter((job) =>
+                job.companyName
+                  .toLowerCase()
+                  .includes(e.target.value.toLowerCase())
               );
               setFilteredJobList(filteredJobListArray);
             }}
