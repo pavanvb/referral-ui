@@ -1,4 +1,3 @@
-import "./App.css";
 import {
   Box,
   Typography,
@@ -10,10 +9,9 @@ import {
   Button,
 } from "@mui/material";
 import { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
-  const [isLoaded, setLoad] = useState("none");
-  const [shimmer, setShimmer] = useState("block");
   const [jobList, setJobList] = useState([]);
 
   useEffect(() => {
@@ -42,7 +40,6 @@ function App() {
 
     fetchData();
   }, []);
-  console.log(jobList);
 
   return (
     <div className="App">
@@ -57,6 +54,19 @@ function App() {
                 borderRadius: "20px",
               }}
             >
+              <Box
+                sx={{
+                  marginLeft: "16px",
+                  border: "0.5px solid grey",
+                  width: "110px",
+                  borderRadius: "10px",
+                  boxShadow: "1px 1px 2px grey",
+                }}
+              >
+                <Typography sx={{ fontSize: "10px" }}>
+                  ⏳Posted 10 days ago{" "}
+                </Typography>
+              </Box>
               <CardHeader
                 avatar={
                   <img
@@ -72,7 +82,9 @@ function App() {
                     <Typography>{job.jobRole}</Typography>
                   </Box>
                 }
-                subheader={job.location}
+                subheader={
+                  <Typography fontSize="12px">{job.location}</Typography>
+                }
                 sx={{
                   ".MuiCardHeader-avatar": {
                     marginRight: "10px",
@@ -80,13 +92,32 @@ function App() {
                   alignItems: "flex-start",
                 }}
               />
+              <Box
+                sx={{
+                  marginLeft: "16px",
+                }}
+              >
+                <Typography sx={{ fontSize: "13px" }}>
+                  Estimated salary:{" "}
+                  {job.salaryCurrencyCode == "USD" ? "$" : "₹"}
+                  {job.minJdSalary ? job.minJdSalary : "00"}
+                  {job.salaryCurrencyCode == "USD" ? "K" : ""}-{job.maxJdSalary}
+                  {job.salaryCurrencyCode == "USD" ? "K" : ""}{" "}
+                  {job.salaryCurrencyCode == "USD" ? "USD" : "LPA"}
+                </Typography>
+              </Box>
               <CardContent>
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography>About Company:</Typography>
+                  <Typography fontSize="13px" fontWeight="700">
+                    About us
+                  </Typography>
                   <Typography
                     sx={{
-                      maxHeight: "210px",
+                      maxHeight: "170px",
                       overflow: "hidden",
                       position: "relative",
+                      fontSize: "13px",
                     }}
                   >
                     {job.jobDetailsFromCompany}
@@ -94,21 +125,30 @@ function App() {
                   <Button
                     sx={{
                       position: "absolute",
-                      marginTop: "180px",
+                      marginTop: "190px",
                       width: "248px",
                       backgroundImage:
                         "linear-gradient(to bottom, transparent, white)",
+                      "&.MuiButton-root": {
+                        textTransform: "unset",
+                      },
                     }}
                   >
-                    View job
+                    <Typography fontSize="14px">View job</Typography>
                   </Button>
                 </Box>
               </CardContent>
               <CardActionArea>
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography variant="h10">Minimum Experience</Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    paddingLeft: "8px",
+                  }}
+                >
+                  <Typography fontSize="12px">Minimum Experience</Typography>
                   <Typography variant="h7">
-                    {job.minExp ? job.minExp : "-"} years
+                    {job.minExp ? job.minExp : "0"} years
                   </Typography>
                 </Box>
                 <CardActions>
@@ -122,8 +162,19 @@ function App() {
                     <Button sx={{ width: "248px", background: "aquamarine" }}>
                       ⚡Easy Apply
                     </Button>
-                    <Button sx={{ width: "248px", background: "aquamarine" }}>
-                      <Typography>Unlock Referral asks</Typography>
+                    <Button
+                      sx={{
+                        width: "248px",
+                        background: "blue",
+                        color: "white",
+                        "&.MuiButton-root": {
+                          textTransform: "unset",
+                        },
+                      }}
+                    >
+                      <Typography fontSize="13px">
+                        Unlock Referral asks
+                      </Typography>
                     </Button>
                   </Box>
                 </CardActions>
